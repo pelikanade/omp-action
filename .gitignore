@@ -1,0 +1,4 @@
+result
+__pycache__/
+*.pyc
+omp-agent.log
