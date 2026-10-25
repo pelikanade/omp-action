@@ -235,8 +235,19 @@ describe("cli", () => {
     const elapsed = Date.now() - started;
 
     expect(result.status).toBe(124);
+    // `--timeout` is in seconds; a millisecond timer would return in microseconds.
+    expect(elapsed).toBeGreaterThanOrEqual(900);
     expect(elapsed).toBeLessThan(30_000);
     expect(outputs(box)["exit-code"]).toBe("124");
+  });
+
+  test("leaves an agent that finishes inside the timeout alone", async () => {
+    const box = sandbox();
+    const omp = fakeOmp(box, "sleep 1.5\necho done\n");
+    const result = await runCli(box, ["--prompt", PROMPT, "--omp", omp, "--timeout", "3"]);
+
+    expect(result.status).toBe(0);
+    expect(outputs(box)["exit-code"]).toBe("0");
   });
 });
 

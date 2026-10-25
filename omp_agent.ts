@@ -75,7 +75,7 @@ function killGroup(pid: number): void {
   }
 }
 
-/** Run a command with inherited stdio, killing its whole session on timeout. */
+/** Run a command with inherited stdio, killing its whole session after `timeout` seconds. */
 async function run(command: string[], cwd: string, timeout: number): Promise<number> {
   const child = Bun.spawn({
     cmd: ["setsid", ...command],
@@ -88,7 +88,7 @@ async function run(command: string[], cwd: string, timeout: number): Promise<num
   const timer = setTimeout(() => {
     killed = true;
     killGroup(child.pid);
-  }, timeout);
+  }, timeout * 1000);
   const status = await child.exited;
   clearTimeout(timer);
   return killed ? TIMEOUT_STATUS : status;
