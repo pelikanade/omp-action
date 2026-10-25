@@ -1,4 +1,4 @@
-name: omp agent
+name: omp-action
 description: >-
   Run an omp agent unattended, streaming its thinking into the job log.
 author: pelikanade
@@ -66,4 +66,4 @@ runs:
         INPUT_APPROVAL_MODE: ${{ inputs.approval-mode }}
         INPUT_THOUGHTS: ${{ inputs.thoughts }}
         INPUT_EXTRA_ARGS: ${{ inputs.extra-args }}
-      run: bash "$GITHUB_ACTION_PATH/action.sh"
+      run: bun "$GITHUB_ACTION_PATH/omp_agent.ts"

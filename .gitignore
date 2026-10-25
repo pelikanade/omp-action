@@ -1,4 +1,4 @@
-result
+node_modules/
 __pycache__/
 *.pyc
 omp-agent.log
